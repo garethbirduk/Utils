@@ -1,4 +1,4 @@
-﻿namespace Utils
+﻿namespace Gradient.Utils
 {
     /// <summary>
     /// Static helper for getting attributes
