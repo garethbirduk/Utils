@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Utils.Test
+namespace Gradient.Utils.Test
 {
     /// <summary>
     /// Test class for AttributeHelper
