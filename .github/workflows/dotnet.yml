@@ -28,13 +28,13 @@ jobs:
 
 
     - name: List Contents Before Packaging
-      run: ls -R Utils/bin/Release/
+      run: ls -R ./Utils/bin/Release/
     
     - name: Build and pack NuGet package
       run: dotnet pack -c Release --no-build
     
     - name: List Contents After Packaging
-      run: ls -R Utils/bin/Release/
+      run: ls -R ./Utils/bin/Release/
 
       
     - name: Build
@@ -44,4 +44,4 @@ jobs:
     - name: Nuget set access    
       run: dotnet nuget add source --username ${{ github.actor }} --password ${{ github.token }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/garethbirduk/index.json"
     - name: Nuget deploy Package
-      run: dotnet nuget push Utils/bin/Release/**/*.nupkg --api-key ${{ secrets.GH_APIKEY }} --source "github"
+      run: dotnet nuget push ./Utils/bin/Release/**/*.nupkg --api-key ${{ secrets.GH_APIKEY }} --source "github"
