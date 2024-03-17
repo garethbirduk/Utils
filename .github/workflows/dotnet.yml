@@ -26,15 +26,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: pwd
-      run: pwd
-
-    - name: ls
-      run: ls
-
-    - name: List Contents Before Packaging
-      run: ls -R ./Utils/bin/Release/
-    
     - name: Build and pack NuGet package
       run: dotnet pack -c Release --no-build
     
