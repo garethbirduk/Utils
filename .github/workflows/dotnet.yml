@@ -29,9 +29,7 @@ jobs:
       run: dotnet build --no-restore --configuration Release
     - name: Test
       run: dotnet test --configuration Release --no-build --verbosity normal
-    - name: Echo access
-      run: echo ${{ secrets.GH_USERNAME }}
-    - name: Nuget set access
-      run: dotnet nuget add source --username ${{ secrets.GH_USERNAME }} --password ${{ secrets.GH_APIKEY }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/garethbirduk/index.json"
+    - name: Nuget set access    
+      run: dotnet nuget add source --username ${{ github.actor }} --password ${{ github.token }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/garethbirduk/index.json"
     - name: Nuget deploy Package
       run: dotnet nuget push Utils/bin/Release/**/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source "github"    
