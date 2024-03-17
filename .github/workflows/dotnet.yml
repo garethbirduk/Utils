@@ -25,6 +25,18 @@ jobs:
       run: echo "::set-output name=version::1.0.0-$GITHUB_RUN_NUMBER"        
     - name: Restore dependencies
       run: dotnet restore
+
+
+    - name: List Contents Before Packaging
+      run: ls -R Utils/bin/Release/
+    
+    - name: Build and pack NuGet package
+      run: dotnet pack -c Release --no-build
+    
+    - name: List Contents After Packaging
+      run: ls -R Utils/bin/Release/
+
+      
     - name: Build
       run: dotnet build --no-restore --configuration Release
     - name: Test
