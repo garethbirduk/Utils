@@ -30,7 +30,7 @@ jobs:
     - name: Test
       run: dotnet test --configuration Release --no-build --verbosity normal
     - name: Echo access
-      run: echo %GH_USERNAME% &&
+      run: echo %GH_USERNAME%
     - name: Nuget set access
       run: dotnet nuget add source --username %GH_USERNAME% --password %GH_APIKEY% --store-password-in-clear-text --name github "https://nuget.pkg.github.com/garethbirduk/index.json"
     - name: Nuget deploy Package
