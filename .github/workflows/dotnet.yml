@@ -39,4 +39,4 @@ jobs:
     - name: ls -R ./Utils/bin/Release/
       run: ls -R ./Utils/bin/Release/     
     - name: Nuget deploy Package
-      run: dotnet nuget push ./Utils/bin/Release/**/*.nupkg --api-key ${{ secrets.GH_APIKEY }} --source "github"
+      run: dotnet nuget push ./Utils/bin/Release/**/*.nupkg --source "github"
