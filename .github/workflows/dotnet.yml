@@ -28,7 +28,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --configuration Release --no-build --verbosity normal
     - name: Nuget set access
       run: dotnet nuget add source --username %GH_USERNAME% --password %GH_APIKEY% --store-password-in-clear-text --name github "https://nuget.pkg.github.com/garethbirduk/index.json"
     - name: Nuget Deploy Package
