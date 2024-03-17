@@ -26,6 +26,11 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
+    - name: pwd
+      run: pwd
+
+    - name: ls
+      run: ls
 
     - name: List Contents Before Packaging
       run: ls -R ./Utils/bin/Release/
