@@ -26,7 +26,9 @@ jobs:
 
     - name: Increment version
       id: increment
-      run: echo ::set-output name=NEW_VERSION::$(dotnet script increment-version.csx ${{ steps.version.outputs.VERSION }})
+      run: |
+        new_version=$(dotnet script .github/scripts/increment-version.csx "${{ steps.version.outputs.VERSION }}")
+        echo "::set-output name=NEW_VERSION::$new_version"
 
     - name: Update project file with new version
       run: dotnet script update-project-file.csx ${{ steps.increment.outputs.NEW_VERSION }}
