@@ -20,9 +20,17 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-    - name: Set version
-      id: set_version
-      run: echo "::set-output name=version::1.0.0-$GITHUB_RUN_NUMBER"        
+    - name: Get current version
+      id: version
+      run: echo ::set-output name=VERSION::$(dotnet build /property:Version)
+
+    - name: Increment version
+      id: increment
+      run: echo ::set-output name=NEW_VERSION::$(dotnet script increment-version.csx ${{ steps.version.outputs.VERSION }})
+
+    - name: Update project file with new version
+      run: dotnet script update-project-file.csx ${{ steps.increment.outputs.NEW_VERSION }}
+       
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
