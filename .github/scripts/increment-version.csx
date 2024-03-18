@@ -1,5 +1,12 @@
 using System;
 
+// Check if any command-line arguments are provided
+if (args.Length == 0)
+{
+    Console.WriteLine("Usage: dotnet script increment-version.csx <version>");
+    Environment.Exit(1);
+}
+
 // Parse the current version from the command line argument
 var currentVersion = args[0];
 var parts = currentVersion.Split('.');
