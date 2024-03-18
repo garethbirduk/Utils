@@ -13,8 +13,7 @@ var major = int.Parse(parts[0]);
 var minor = int.Parse(parts[1]);
 var patch = int.Parse(parts[2]);
 
-// Determine the versioning strategy and increment the appropriate part
-// For example, you might have logic here to increment the patch version
+// Increment the patch version
 patch++;
 
 // Output the new version
