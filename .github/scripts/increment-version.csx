@@ -7,6 +7,7 @@ if (Args == null || Args.Count() < 1)
 }
 else
 {
+    Console.WriteLine($"Args: {string.Join("; ", Args.Select(x => x.))}");
     string inputVersion = Args[0];
     string[] parts = inputVersion.Split('.');
 
