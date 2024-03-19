@@ -33,9 +33,6 @@ jobs:
       if: ${{ success() }}
       run: dotnet script --version
 
-    - name: Get current version
-      run: echo "CURRENT_VERSION=$(dotnet build /property:Version | grep -oP '(?<=<Version>).*(?=</Version>)')" >> $GITHUB_ENV
-
     - name: Increment version
       id: increment
       run: dotnet script .github/scripts/increment-version.csx
