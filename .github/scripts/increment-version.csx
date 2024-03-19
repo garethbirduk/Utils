@@ -1,27 +1,27 @@
 using System;
+using System.Linq;
 
-// Check if any command-line arguments are provided
-if (args.Length == 0)
+if (Args == null || Args.Length < 1)
 {
-    Console.WriteLine("Usage: dotnet script increment-version.csx <version>");
-    Environment.Exit(1);
+    Console.WriteLine("Usage: dotnet script increment-version.csx <current_version>");
 }
-
-// Parse the current version from the command line argument
-var currentVersion = args[0];
-var parts = currentVersion.Split('.');
-if (parts.Length != 3)
+else
 {
-    Console.Error.WriteLine("Invalid version format.");
-    Environment.Exit(1);
+    string inputVersion = Args[0];
+    string[] parts = inputVersion.Split('.');
+
+    // Validate input format
+    if (parts.Length != 3 || !parts.All(x => int.TryParse(x, out _)))
+    {
+        Console.WriteLine("Invalid version format. Please provide a version number in the format 'major.minor.patch'.");
+    }
+    else
+    {
+        // Increment the patch version
+        int major = int.Parse(parts[0]);
+        int minor = int.Parse(parts[1]);
+        int patch = int.Parse(parts[2]) + 1;
+
+        Console.WriteLine($"{major}.{minor}.{patch}");
+    }
 }
-
-var major = int.Parse(parts[0]);
-var minor = int.Parse(parts[1]);
-var patch = int.Parse(parts[2]);
-
-// Increment the patch version
-patch++;
-
-// Output the new version
-Console.WriteLine($"{major}.{minor}.{patch}");
