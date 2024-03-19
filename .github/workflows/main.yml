@@ -34,15 +34,11 @@ jobs:
         dotnet tool install -g dotnet-reportgenerator-globaltool
         reportgenerator "-reports:Utils.Test/coverage.opencover.xml" "-targetdir:./coverage/" "-reporttypes:Badges;Html;TextSummary"
         
-    - name: ls
-      run: ls
-
-
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: coverage
-        path: ./Utils/coverage/index.html
+        path: ./coverage/index.html
 
     - name: Nuget set access
       if: github.ref == 'refs/heads/main'    
