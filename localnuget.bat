@@ -1,1 +1,0 @@
-xcopy /Y .\Utils\bin\Debug\*.nupkg %LOCALNUGET%\*

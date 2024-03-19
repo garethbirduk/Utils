@@ -54,14 +54,17 @@ if (Args != null)
         Console.WriteLine(name);
     }
 
-    if (name.Contains("breaking", StringComparison.OrdinalIgnoreCase))
+    if (name.Contains("__breaking", StringComparison.OrdinalIgnoreCase))
         update = Update.Major;
 
-    if (name.Contains("feature", StringComparison.OrdinalIgnoreCase))
+    if (name.Contains("__feature", StringComparison.OrdinalIgnoreCase))
         update = Update.Minor;
 
-    if (name.Contains("bug", StringComparison.OrdinalIgnoreCase))
+    if (name.Contains("__bug", StringComparison.OrdinalIgnoreCase))
         update = Update.Patch;
+
+    if (name.Contains("__nosource", StringComparison.OrdinalIgnoreCase))
+        update = Update.None;
 }
 
 var projectFilePath = System.IO.Path.Combine("Utils", "Utils.csproj");
@@ -153,6 +156,9 @@ static string UpdateVersion(string version, Update update)
         case Update.Unknown:
             parts[2]++;
             break;
+
+        case Update.None:
+            break;
     }
     return string.Join(".", parts);
 }
@@ -160,6 +166,7 @@ static string UpdateVersion(string version, Update update)
 enum Update
 {
     Unknown,
+    None,
     Patch,
     Minor,
     Major
