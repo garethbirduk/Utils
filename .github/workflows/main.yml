@@ -54,6 +54,9 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v1
+      
+    - name: Create Coverage Badges
+      uses: jaywcjlove/coverage-badges-cli@v2.0.0  
 
     - name: Nuget set access
       if: github.ref == 'refs/heads/main'    
@@ -62,3 +65,6 @@ jobs:
     - name: Nuget deploy Package
       if: github.ref == 'refs/heads/main'
       run: dotnet nuget push ./Utils/bin/Release/**/*.nupkg --source "github" --api-key ${{ secrets.GH_APIKEY }}
+
+
+            
