@@ -38,7 +38,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: coverage
-        path: ./coverage/index.html
+        path: ./coverage/*.*
 
     - name: Nuget set access
       if: github.ref == 'refs/heads/main'    
