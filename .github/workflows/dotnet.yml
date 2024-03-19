@@ -36,13 +36,12 @@ jobs:
       run: dotnet script --version      
   
     - name: Get current version
-      id: version
-      run: echo ::set-output name=VERSION::$(dotnet build /property:Version)
+      run: echo "{CURRENT_VERSION}={$(dotnet build /property:Version)}" >> $GITHUB_OUTPUT
 
     - name: Increment version
       id: increment
       run: |
-        new_version=$(dotnet script .github/scripts/increment-version.csx "${{ steps.version.outputs.VERSION }}")
+        new_version=$(dotnet script .github/scripts/increment-version.csx "${{ CURRENT_VERSION }}")
         echo "::set-output name=NEW_VERSION::${{ steps.version.outputs.VERSION }}"
 
     - name: Update project file with new version
