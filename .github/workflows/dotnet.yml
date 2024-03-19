@@ -36,7 +36,7 @@ jobs:
       run: dotnet script --version      
   
     - name: Get current version
-      run: echo "{CURRENT_VERSION}={$(dotnet build /property:Version)}" >> $GITHUB_OUTPUT
+      run: echo "CURRENT_VERSION={$(dotnet build /property:Version)}" >> $GITHUB_OUTPUT
 
     - name: Increment version
       id: increment
