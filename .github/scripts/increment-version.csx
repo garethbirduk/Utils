@@ -3,15 +3,33 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 var debug = false;
-var patch = -1;
-if (Args != null && Args.Count() > 0 && Args[0] != null)
+var local = false;
+
+var name = "unknown";
+var update = Update.Unknown;
+
+if (Args != null)
 {
-    Console.WriteLine(Args[0]);
-    patch = int.Parse(Args[0]);
+    if (Args.Count() > 0 && Args[0] != null)
+    {
+        name = Args[0];
+        Console.WriteLine(name);
+    }
+
+    if (name.Contains("breaking", StringComparison.OrdinalIgnoreCase))
+        update = Update.Major;
+
+    if (name.Contains("feature", StringComparison.OrdinalIgnoreCase))
+        update = Update.Minor;
+
+    if (name.Contains("bug", StringComparison.OrdinalIgnoreCase))
+        update = Update.Patch;
 }
 
-//var projectFilePath = System.IO.Path.Combine("..", "..", "Utils", "Utils.csproj"); // used for local testing
 var projectFilePath = System.IO.Path.Combine("Utils", "Utils.csproj");
+if (local)
+    projectFilePath = System.IO.Path.Combine("..", "..", "Utils", "Utils.csproj");
+
 Console.WriteLine($"projectFilePath: {projectFilePath}");
 
 // Read all lines from the project file
@@ -36,7 +54,7 @@ for (var i = 0; i < lines.Count(); i++)
     if (match.Success)
     {
         string version = match.Groups[2].Value;
-        string incrementedVersion = UpdatePatch(version, patch);
+        string incrementedVersion = UpdatePatch(version, update);
         string replacedLine = match.Groups[1].Value + incrementedVersion + match.Groups[3].Value;
         Console.WriteLine("Original: " + line);
         Console.WriteLine("Replaced: " + replacedLine);
@@ -53,16 +71,39 @@ if (debug)
     foreach (var line in File.ReadAllLines(projectFilePath))
         Console.WriteLine(line);
 
-// Function to increment the patch number of a version string
-static string UpdatePatch(string version, int patch)
+static string UpdatePatch(string version, Update update)
 {
-    Console.WriteLine(patch.ToString());
-    string[] parts = version.Split('.');
-    if (patch < 0)
+    Console.WriteLine(update.ToString());
+    var parts = version.Split('.').Select(x => int.Parse(x)).ToList();
+
+    switch (update)
     {
-        patch = int.Parse(parts[2]);
-        patch++;
+        case Update.Major:
+            parts[0]++;
+            parts[1] = 0;
+            parts[2] = 0;
+            break;
+
+        case Update.Minor:
+            parts[1]++;
+            parts[2] = 0;
+            break;
+
+        case Update.Patch:
+            parts[2]++;
+            break;
+
+        case Update.Unknown:
+            parts[2]++;
+            break;
     }
-    parts[2] = patch.ToString();
     return string.Join(".", parts);
+}
+
+enum Update
+{
+    Unknown,
+    Patch,
+    Minor,
+    Major
 }
