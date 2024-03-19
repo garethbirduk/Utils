@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-if (Args == null || Args.Length < 1)
+if (Args == null || Args.Count < 1)
 {
     Console.WriteLine("Usage: dotnet script increment-version.csx <current_version>");
 }
@@ -11,7 +11,7 @@ else
     string[] parts = inputVersion.Split('.');
 
     // Validate input format
-    if (parts.Length != 3 || !parts.All(x => int.TryParse(x, out _)))
+    if (parts.Count != 3 || !parts.All(x => int.TryParse(x, out _)))
     {
         Console.WriteLine("Invalid version format. Please provide a version number in the format 'major.minor.patch'.");
     }
