@@ -36,15 +36,9 @@ jobs:
     - name: Get current version
       run: echo "CURRENT_VERSION=$(dotnet build /property:Version | grep -oP '(?<=<Version>).*(?=</Version>)')" >> $GITHUB_ENV
 
-
     - name: Increment version
       id: increment
-      run: |
-        new_version=$(dotnet script .github/scripts/increment-version.csx "${{ env.CURRENT_VERSION }}")
-        echo "::set-output name=NEW_VERSION::$new_version"
-
-    - name: Update project file with new version
-      run: dotnet script .github/scripts/update-project-file.csx ${{ steps.increment.outputs.NEW_VERSION }}
+      run: dotnet script .github/scripts/increment-version.csx
 
     - name: Restore dependencies
       run: dotnet restore
