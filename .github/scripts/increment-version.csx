@@ -10,8 +10,8 @@ if (Args != null && Args.Count() > 0 && Args[0] != null)
     patch = int.Parse(Args[0]);
 }
 
-var projectFilePath = System.IO.Path.Combine("..", "..", "Utils", "Utils.csproj");
-//var projectFilePath = System.IO.Path.Combine("Utils", "Utils.csproj");
+//var projectFilePath = System.IO.Path.Combine("..", "..", "Utils", "Utils.csproj"); // used for local testing
+var projectFilePath = System.IO.Path.Combine("Utils", "Utils.csproj");
 Console.WriteLine($"projectFilePath: {projectFilePath}");
 
 // Read all lines from the project file
