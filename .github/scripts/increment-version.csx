@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-var projectFilePath = System.IO.Path.Combine("..", "..", "Utils", "Utils.csproj");
+var projectFilePath = System.IO.Path.Combine("Utils", "Utils.csproj");
 Console.WriteLine($"projectFilePath: {projectFilePath}");
 
 // Read all lines from the project file
