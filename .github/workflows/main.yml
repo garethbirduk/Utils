@@ -22,21 +22,6 @@ jobs:
     - name: Print .NET SDK version
       run: dotnet --version
 
-    - name: Install dotnet-script tool
-      run: dotnet tool install -g dotnet-script
-
-    - name: Check dotnet-script tool installation
-      run: dotnet script --version
-      continue-on-error: true
-
-    - name: Display dotnet-script version
-      if: ${{ success() }}
-      run: dotnet script --version
-
-    - name: Increment version
-      id: increment
-      run: dotnet script .github/scripts/increment-version.csx ${{ GITHUB.RUN_NUMBER }}
-
     - name: Restore dependencies
       run: dotnet restore
 
