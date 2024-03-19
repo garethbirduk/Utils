@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-var debug = true;
+var debug = false;
 var patch = -1;
 if (Args != null && Args.Count() > 0 && Args[0] != null)
 {
