@@ -99,9 +99,8 @@ jobs:
 
     - name: Nuget deploy Package
       if: github.ref == 'refs/heads/main'
-      run: |
+      run:
         dotnet nuget push ./Utils/bin/Release/**/*.nupkg --source "github" --api-key ${{ secrets.GH_APIKEY }} --skip-duplicate
-        continue-on-error: true
 
 
             
