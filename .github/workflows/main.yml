@@ -83,7 +83,7 @@ jobs:
       with:
         label: Unit Test Coverage
         color: brightgreen
-        path: ./Utils/coverage.opencover.xml
+        path: ./Utils.Test/coverage.opencover.xml
         gist-filename: code-coverage.json
         gist-id: b2cc567853da1a12d934884d7da21e43
         gist-auth-token: ${{ secrets.GIST_AUTH_TOKEN }}       
