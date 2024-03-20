@@ -77,13 +77,21 @@ jobs:
         output: both
         thresholds: '60 80'
             
-    - name: Add Coverage PR Comment
-      uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request'
+    - name: Create Test Coverage Badge
+      uses: simon-k/dotnet-code-coverage-badge@v1.0.0
+      id: create_coverage_badge
       with:
-        recreate: true
-        path: code-coverage-results.md  
+        label: Unit Test Coverage
+        color: brightgreen
+        path: ./Utils/coverage.opencover.xml
+        gist-filename: code-coverage.json
+        gist-id: b2cc567853da1a12d934884d7da21e43
+        gist-auth-token: ${{ secrets.GIST_AUTH_TOKEN }}       
+    - name: Print code coverage
+      run: echo "Code coverage percentage ${{steps.create_coverage_badge.outputs.percentage}}%"
       
+    - name: Print badge data
+      run: echo "Badge data ${{steps.test_step.outputs.badge}}"
 
     - name: Nuget set access
       if: github.ref == 'refs/heads/main'    
