@@ -16,7 +16,7 @@
     <PackageTags>utils; gradient; software</PackageTags>
     <RepositoryUrl>https://github.com/garethbirduk/GradientSoftware.Utils</RepositoryUrl>
     <PackageId>GradientSoftware.$(AssemblyName)</PackageId>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\icon.png">
+    <None Include="..\resources\icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
