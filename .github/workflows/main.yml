@@ -1,4 +1,4 @@
-name: .NET
+name: workflow
 
 on:
   push:
@@ -99,7 +99,9 @@ jobs:
 
     - name: Nuget deploy Package
       if: github.ref == 'refs/heads/main'
-      run: dotnet nuget push ./Utils/bin/Release/**/*.nupkg --source "github" --api-key ${{ secrets.GH_APIKEY }}
+      run: |
+        dotnet nuget push ./Utils/bin/Release/**/*.nupkg --source "github" --api-key ${{ secrets.GH_APIKEY }}
+        continue-on-error: true
 
 
             
