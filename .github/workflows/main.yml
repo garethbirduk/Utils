@@ -53,33 +53,19 @@ jobs:
       uses: actions/upload-pages-artifact@v1
       with:
           path: './coverage/'
+
+    - name: Print code coverage
+      run: echo "Code coverage percentage ${{steps.create_coverage_badge.outputs.percentage}}%"
           
     - name: Deploy to GitHub Pages
       id: deployment
+      if: github.ref == 'refs/heads/main'
       uses: actions/deploy-pages@v1
-
-    - name: Extract Coverage Percentage
-      run: |
-        # Find the line containing coverage percentage in summary.txt and extract the percentage value
-        COVERAGE_PERCENTAGE=$(grep 'Line coverage' ./coverage/Summary.txt | awk -F ': ' '{print $2}')
-        echo "Coverage Percentage: $COVERAGE_PERCENTAGE"
-        
-    - name: Code Coverage Report
-      uses: irongut/CodeCoverageSummary@v1.3.0
-      with:
-        filename: ./Utils.Test/coverage.cobertura.xml
-        badge: true
-        fail_below_min: true
-        format: markdown
-        hide_branch_rate: false
-        hide_complexity: true
-        indicators: true
-        output: both
-        thresholds: '60 80'
             
     - name: Create Test Coverage Badge
       uses: simon-k/dotnet-code-coverage-badge@v1.0.0
       id: create_coverage_badge
+      if: github.ref == 'refs/heads/main'
       with:
         label: Unit Test Coverage
         color: brightgreen
@@ -87,10 +73,9 @@ jobs:
         gist-filename: code-coverage.json
         gist-id: b2cc567853da1a12d934884d7da21e43
         gist-auth-token: ${{ secrets.GIST_AUTH_TOKEN }}       
-    - name: Print code coverage
-      run: echo "Code coverage percentage ${{steps.create_coverage_badge.outputs.percentage}}%"
-      
+
     - name: Print badge data
+      if: github.ref == 'refs/heads/main'    
       run: echo "Badge data ${{steps.test_step.outputs.badge}}"
 
     - name: Nuget set access
@@ -101,6 +86,3 @@ jobs:
       if: github.ref == 'refs/heads/main'
       run:
         dotnet nuget push ./Utils/bin/Release/**/*.nupkg --source "github" --api-key ${{ secrets.GH_APIKEY }} --skip-duplicate
-
-
-            
