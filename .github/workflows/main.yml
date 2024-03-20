@@ -54,9 +54,6 @@ jobs:
       with:
           path: './coverage/'
 
-    - name: Print code coverage
-      run: echo "Code coverage percentage ${{steps.create_coverage_badge.outputs.percentage}}%"
-          
     - name: Deploy to GitHub Pages
       id: deployment
       if: github.ref == 'refs/heads/main'
