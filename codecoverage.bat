@@ -1,6 +1,6 @@
 @echo off
 
-dotnet test Utils.Test/Utils.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat="opencover" --verbosity normal
+dotnet test Utils.Test/Utils.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat="cobertura" --verbosity normal
 
 dotnet tool install -g dotnet-reportgenerator-globaltool
 
