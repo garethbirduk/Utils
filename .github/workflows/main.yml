@@ -48,7 +48,12 @@ jobs:
         dotnet test --configuration Release --no-build Utils.Test/Utils.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat="opencover" --verbosity normal
         dotnet tool install -g dotnet-reportgenerator-globaltool
         reportgenerator "-reports:Utils.Test/coverage.opencover.xml" "-targetdir:./coverage/" "-reporttypes:Badges;Html;TextSummary"
-         
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+          path: './coverage/'
+          
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v1
@@ -58,6 +63,8 @@ jobs:
         # Find the line containing coverage percentage in summary.txt and extract the percentage value
         COVERAGE_PERCENTAGE=$(grep 'Line coverage' coverage/summary.txt | awk -F ': ' '{print $2}')
         echo "Coverage Percentage: $COVERAGE_PERCENTAGE"
+      
+      
 
     - name: Nuget set access
       if: github.ref == 'refs/heads/main'    
