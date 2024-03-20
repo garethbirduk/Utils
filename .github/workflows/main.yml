@@ -61,7 +61,7 @@ jobs:
     - name: Extract Coverage Percentage
       run: |
         # Find the line containing coverage percentage in summary.txt and extract the percentage value
-        COVERAGE_PERCENTAGE=$(grep 'Line coverage' ./coverage/summary.txt | awk -F ': ' '{print $2}')
+        COVERAGE_PERCENTAGE=$(grep 'Line coverage' ./coverage/Summary.txt | awk -F ': ' '{print $2}')
         echo "Coverage Percentage: $COVERAGE_PERCENTAGE"
       
       
