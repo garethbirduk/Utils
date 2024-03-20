@@ -63,7 +63,25 @@ jobs:
         # Find the line containing coverage percentage in summary.txt and extract the percentage value
         COVERAGE_PERCENTAGE=$(grep 'Line coverage' ./coverage/Summary.txt | awk -F ': ' '{print $2}')
         echo "Coverage Percentage: $COVERAGE_PERCENTAGE"
-      
+        
+    - name: Code Coverage Summary
+      uses: irongut/CodeCoverageSummary@v1.3.0
+        filename: ./Utils.Test/coverage.cobertura.xml
+        badge: true
+        fail_below_min: true
+        format: markdown
+        hide_branch_rate: false
+        hide_complexity: true
+        indicators: true
+        output: both
+        thresholds: '60 80'
+            
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        recreate: true
+        path: code-coverage-results.md  
       
 
     - name: Nuget set access
