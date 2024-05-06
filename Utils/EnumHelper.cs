@@ -1,9 +1,8 @@
 ﻿#pragma warning disable CS8603 // Possible null reference return.
 
-using System;
-using Utils.Attributes;
+using Gradient.Utils.Attributes;
 
-namespace Utils
+namespace Gradient.Utils
 {
     public static class EnumHelper
     {
