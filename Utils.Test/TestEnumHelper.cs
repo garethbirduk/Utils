@@ -1,5 +1,4 @@
-using Utils;
-using Utils.Attributes;
+using Gradient.Utils.Attributes;
 
 namespace Gradient.Utils.Test
 {
@@ -59,6 +58,7 @@ namespace Gradient.Utils.Test
         [DataRow("Yes", MyEnum.No)]
         [DataRow("No", MyEnum.No)]
         [DataRow("Si", MyEnum.Yes)]
+        [DataRow("Ja", MyEnum.No)]
         public void TestStringToEnumAliasOrDefault(string enumString, MyEnum expected)
         {
             Assert.AreEqual(expected, EnumHelper.StringToEnumAliasOrDefault<MyEnum>(enumString));
@@ -68,7 +68,11 @@ namespace Gradient.Utils.Test
         [DataRow("Yes", false, MyEnum.Yes)]
         [DataRow("No", false, MyEnum.No)]
         [DataRow("Si", false, MyEnum.No)]
+        [DataRow("Ja", false, MyEnum.No)]
+        [DataRow("Yes", true, MyEnum.Yes)]
+        [DataRow("No", true, MyEnum.No)]
         [DataRow("Si", true, MyEnum.Yes)]
+        [DataRow("Ja", true, MyEnum.No)]
         public void TestStringToEnumOrDefault(string enumString, bool allowAlias, MyEnum expected)
         {
             Assert.AreEqual(expected, EnumHelper.StringToEnumOrDefault<MyEnum>(enumString, allowAlias));

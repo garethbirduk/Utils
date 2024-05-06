@@ -1,4 +1,4 @@
-﻿namespace Utils.Attributes
+﻿namespace Gradient.Utils.Attributes
 {
     /// <summary>
     /// Used to provide a string list of alias names for assisting in interrogation through Reflection.
