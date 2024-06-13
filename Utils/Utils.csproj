@@ -16,7 +16,8 @@
     <PackageTags>utils; gradient; software</PackageTags>
     <RepositoryUrl>https://github.com/garethbirduk/GradientSoftware.Utils</RepositoryUrl>
     <PackageId>GradientSoftware.$(AssemblyName)</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
+    <RootNamespace>Gradient.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,6 +33,11 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PostSharp" Version="2024.1.4" />
+    <PackageReference Include="PostSharp.Patterns.Common" Version="2024.1.4" />
   </ItemGroup>
 
 </Project>
