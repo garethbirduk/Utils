@@ -33,7 +33,10 @@ jobs:
 
     - name: Print .NET SDK version
       run: dotnet --version
-
+      
+    - name: Nuget set access
+      run: dotnet nuget add source --username ${{ github.actor }} --password ${{ secrets.GH_APIKEY }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/garethbirduk/index.json"
+      
     - name: Restore dependencies
       run: dotnet restore
 
@@ -52,7 +55,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
       with:
-          path: './coverage/'
+        path: './coverage/'
 
     - name: Deploy to GitHub Pages
       id: deployment
