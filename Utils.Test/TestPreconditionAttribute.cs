@@ -29,6 +29,13 @@ namespace Gradient.Utils.Test
             return myInt < 100;
         }
 
+        [Precondition("a", "a.Min() > 0")]
+        [Precondition("b", "b.Min() > 0")]
+        public static int MultipleListPreconditions(List<int> a, List<int> b)
+        {
+            return a.Max() + b.Max();
+        }
+
         [Precondition("a", "a > 0")]
         [Precondition("b", "b > 0")]
         public static int MultiplePreconditions(int a, int b)
@@ -87,6 +94,13 @@ namespace Gradient.Utils.Test
         }
 
         [TestMethod]
+        public void Test_Lists()
+        {
+            Assert.IsNotNull(new PreconditionAttribute("a", "x != 1", "my message"));
+            Assert.IsNotNull(new PreconditionAttribute("a", "x != 1"));
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void Test_Multiple_BothFail()
         {
@@ -122,6 +136,47 @@ namespace Gradient.Utils.Test
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
+        public void Test_MultipleLists_FailBoth()
+        {
+            Assert.AreEqual(6, MyTestClass.MultipleListPreconditions(new List<int> { -1, 2 }, new List<int> { -3, 4 }));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Test_MultipleLists_FailFirst()
+        {
+            Assert.AreEqual(6, MyTestClass.MultipleListPreconditions(new List<int> { -1, 2 }, new List<int> { 3, 4 }));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Test_MultipleLists_FailLast()
+        {
+            Assert.AreEqual(6, MyTestClass.MultipleListPreconditions(new List<int> { 1, 2 }, new List<int> { -3, 4 }));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Test_MultipleLists_FailNullFirst()
+        {
+            Assert.AreEqual(6, MyTestClass.MultipleListPreconditions(null, new List<int> { 3, 4 }));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Test_MultipleLists_FailNullLast()
+        {
+            Assert.AreEqual(6, MyTestClass.MultipleListPreconditions(new List<int> { 1, 2 }, null));
+        }
+
+        [TestMethod]
+        public void Test_MultipleLists_OK()
+        {
+            Assert.AreEqual(6, MyTestClass.MultipleListPreconditions(new List<int> { 1, 2 }, new List<int> { 3, 4 }));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void Test_MyIntMethod_xTooLow()
         {
             MyTestClass.IsLessThan100(5);
@@ -130,7 +185,7 @@ namespace Gradient.Utils.Test
         [TestMethod]
         public void TestIsNotNullExample_Error_IsNull()
         {
-            Assert.ThrowsException<ArgumentException>(() => MyTestClass.MyObjectMethod(null));
+            Assert.ThrowsException<ArgumentNullException>(() => MyTestClass.MyObjectMethod(null));
         }
 
         [TestMethod]
