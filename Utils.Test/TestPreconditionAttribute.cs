@@ -1,7 +1,7 @@
 using Gradient.Utils.Attributes;
 using System.Linq.Dynamic.Core.Exceptions;
 
-namespace Gradient.Utils.Tests
+namespace Gradient.Utils.Test
 {
     internal static class MyTestClass
     {
@@ -27,6 +27,13 @@ namespace Gradient.Utils.Tests
         public static bool IsLessThan100(int myInt)
         {
             return myInt < 100;
+        }
+
+        [Precondition("a", "a > 0")]
+        [Precondition("b", "b > 0")]
+        public static int MultiplePreconditions(int a, int b)
+        {
+            return a + b;
         }
 
         [Precondition("myThing", "myThing != null && myThing.MyCount < 100")]
@@ -77,6 +84,40 @@ namespace Gradient.Utils.Tests
                 Assert.IsTrue(ex.Message.Contains("Parameter preconditions not met: myInt > 10"));
             }
             Assert.IsTrue(exceptionCaught);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Test_Multiple_BothFail()
+        {
+            MyTestClass.MultiplePreconditions(-2, -3);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Test_Multiple_BothFails()
+        {
+            Assert.AreEqual(5, MyTestClass.MultiplePreconditions(2, -3));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Test_Multiple_FirstFails()
+        {
+            MyTestClass.MultiplePreconditions(-2, 3);
+        }
+
+        [TestMethod]
+        public void Test_Multiple_OK()
+        {
+            Assert.AreEqual(5, MyTestClass.MultiplePreconditions(2, 3));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Test_Multiple_SecondFails()
+        {
+            MyTestClass.MultiplePreconditions(2, -3);
         }
 
         [TestMethod]
