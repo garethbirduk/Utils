@@ -16,7 +16,7 @@
     <PackageTags>utils; gradient; software</PackageTags>
     <RepositoryUrl>https://github.com/garethbirduk/GradientSoftware.Utils</RepositoryUrl>
     <PackageId>GradientSoftware.$(AssemblyName)</PackageId>
-    <Version>0.3.0</Version>
+    <Version>0.3.1</Version>
     <RootNamespace>Gradient.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
