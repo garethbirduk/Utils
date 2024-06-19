@@ -36,13 +36,24 @@ namespace Gradient.Utils.Attributes
                 var parameterType = parameter.ParameterType;
                 var lambda = DynamicExpressionParser.ParseLambda(new[] { Expression.Parameter(parameterType, parameter.Name) }, typeof(bool), _expression);
                 var compiledLambda = lambda.Compile();
-                var invokePrecondition = compiledLambda.DynamicInvoke(value);
-#pragma warning disable CS8605 // Unboxing a possibly null value.
-                if (!(bool)invokePrecondition)
+                try
                 {
+                    var invokePrecondition = compiledLambda.DynamicInvoke(value);
+#pragma warning disable CS8605 // Unboxing a possibly null value.
+                    if (!(bool)invokePrecondition)
+                    {
+                        throw new ArgumentException(_errorMessage, parameter.Name);
+                    }
+#pragma warning restore CS8605 // Unboxing a possibly null value.
+                }
+                catch
+                {
+                    if (value is null)
+                    {
+                        throw new ArgumentNullException(_errorMessage);
+                    }
                     throw new ArgumentException(_errorMessage, parameter.Name);
                 }
-#pragma warning restore CS8605 // Unboxing a possibly null value.
             }
         }
     }
