@@ -1,4 +1,5 @@
 ﻿using PostSharp.Aspects;
+using PostSharp.Aspects.Dependencies;
 using PostSharp.Serialization;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -7,6 +8,7 @@ using System.Reflection;
 namespace Gradient.Utils.Attributes
 {
     [PSerializable]
+    [AspectTypeDependency(AspectDependencyAction.Order, AspectDependencyPosition.Any, typeof(PreconditionAttribute))]
     public class PreconditionAttribute : OnMethodBoundaryAspect
     {
         private string _errorMessage;
@@ -34,7 +36,7 @@ namespace Gradient.Utils.Attributes
 
                 var value = args.Arguments[i];
                 var parameterType = parameter.ParameterType;
-                var lambda = DynamicExpressionParser.ParseLambda(new[] { Expression.Parameter(parameterType, parameter.Name) }, typeof(bool), _expression);
+                var lambda = DynamicExpressionParser.ParseLambda([Expression.Parameter(parameterType, parameter.Name)], typeof(bool), _expression);
                 var compiledLambda = lambda.Compile();
                 try
                 {
