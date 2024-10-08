@@ -1,12 +1,13 @@
+using Gradient.Utils.Windows;
 using Moq;
 using Newtonsoft.Json;
 
-namespace Gradient.Utils.Test
+namespace Gradient.Utils.Test.Windows
 {
     [TestClass]
     public class RegistryHelperTests
     {
-        private readonly string TestRegistryKeyPath = $"SOFTWARE\\GradientUnitTests\\{Guid.NewGuid()}";
+        private readonly string TestRegistryKeyPath = $"SOFTWARE\\GradientUtilsTestWindows\\{Guid.NewGuid()}";
 
         /// <summary>
         /// Checks if a specific subkey exists within a base registry key.
@@ -28,7 +29,7 @@ namespace Gradient.Utils.Test
         private class TestSettings
         {
             public int Age { get; set; }
-            public string Name { get; set; }
+            public string Name { get; set; } = "";
         }
 
         [TestCleanup]
@@ -174,7 +175,7 @@ namespace Gradient.Utils.Test
 
             // Assert
             string jsonValue = RegistryHelper.LoadValue(valueName, TestRegistryKeyPath);
-            TestSettings loadedObject = JsonConvert.DeserializeObject<TestSettings>(jsonValue);
+            var loadedObject = JsonConvert.DeserializeObject<TestSettings>(jsonValue);
 
             Assert.IsNotNull(loadedObject);
             Assert.AreEqual(testObject.Name, loadedObject.Name);

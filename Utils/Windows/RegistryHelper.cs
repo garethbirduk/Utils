@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json;
 
-namespace Gradient.Utils
+namespace Gradient.Utils.Windows
 {
     public interface IPlatformService
     {
