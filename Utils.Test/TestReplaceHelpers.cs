@@ -1,7 +1,7 @@
 namespace Gradient.Utils.Test
 {
     [TestClass]
-    public class StringExtensionsTests
+    public class TestReplaceHelpers
     {
         [DataTestMethod]
         [DataRow("hello hello hello", "hello", "hi", 2, "hi hi hello")] // Replace first 2 instances
